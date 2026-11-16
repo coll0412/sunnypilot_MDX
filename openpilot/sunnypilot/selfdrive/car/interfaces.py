@@ -14,6 +14,7 @@ from openpilot.sunnypilot.selfdrive.controls.lib.nnlc.helpers import get_nn_mode
 from openpilot.sunnypilot.selfdrive.controls.lib.speed_limit.helpers import set_speed_limit_assist_availability
 
 from openpilot.sunnypilot.sunnylink.statsd import STATSLOGSP
+from openpilot.sunnypilot.selfdrive.car.honda_nidec_long import setup_honda_nidec_long_store
 
 
 def _enforce_torque_lateral_control(CP: structs.CarParams, params: Params | None = None, enabled: bool = False) -> bool:
@@ -94,6 +95,7 @@ def setup_interfaces(CI: CarInterfaceBase, params: Params | None = None) -> None
   _initialize_intelligent_cruise_button_management(CI.CP, CI.CP_SP, params)
   _initialize_torque_lateral_control(CI, CI.CP, enforce_torque, nnlc_enabled)
   _cleanup_unsupported_params(CI.CP, CI.CP_SP)
+  setup_honda_nidec_long_store(CI, params)
 
   try:
     STATSLOGSP.raw('sunnypilot.car_params', CI.CP.to_dict())
@@ -104,6 +106,11 @@ def setup_interfaces(CI: CarInterfaceBase, params: Params | None = None) -> None
 
 def initialize_params(params) -> list[dict[str, Any]]:
   keys: list = []
+
+  # honda
+  keys.extend([
+    "HondaNidecLongMode",
+  ])
 
   # hyundai
   keys.extend([

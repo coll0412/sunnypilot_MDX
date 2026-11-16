@@ -240,6 +240,8 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"BackupManager_RestoreVersion", {PERSISTENT, STRING}},
 
     // sunnypilot car specific params
+    {"HondaNidecLongMode", {PERSISTENT | BACKUP, INT, "1"}},  // MDX: 0 stock, 1 mapped, 2 adaptive (MVL port)
+    {"HondaNidecLongState", {PERSISTENT | BACKUP, JSON}},     // MDX adaptive mode learned values
     {"HyundaiLongitudinalTuning", {PERSISTENT | BACKUP, INT, "0"}},
     {"SubaruStopAndGo", {PERSISTENT | BACKUP, BOOL, "0"}},
     {"SubaruStopAndGoManualParkingBrake", {PERSISTENT | BACKUP, BOOL, "0"}},
